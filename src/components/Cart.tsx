@@ -27,6 +27,8 @@ const Cart = () => {
       );
       console.log(response.data);
       if (response.data.url) {
+        // this  will redirect user on successfull payment page.
+        window.location.href = response.data.url;
       }
     } catch (error) {
       console.error(error.message);

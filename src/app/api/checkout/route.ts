@@ -4,7 +4,8 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const getActiveProduct = async () => {
   try {
-    const checkProducts = await stripe.product.list();
+    // this represent  the products id that are currently active (visible to
+    const checkProducts = await stripe.products.list();
     const availableProducts = checkProducts.data.filter(
       (product: any) => product.active === true
     );
@@ -15,6 +16,7 @@ const getActiveProduct = async () => {
 };
 
 export const POST = async (req: any) => {
+  // This product represents the argument in the dataObject
   const { products } = await req.json();
   const ProductArr: products[] = products;
 
@@ -48,5 +50,31 @@ export const POST = async (req: any) => {
     );
   }
 
-  return NextResponse.json({ url: "" });
+  // this part  updates existing products with new information from the request  or keeps them as they are if no changes were
+  activeProducts = await getActiveProduct();
+  let stripeItems: any = [];
+  for (const product of ProductArr) {
+    const stripeProduct = activeProducts?.find(
+      (prod: any) => prod?.name?.toLowerCase() === product?.name?.toLowerCase()
+    );
+    if (stripeProduct) {
+      stripeItems.push({
+        price: stripeProduct.default_price,
+        quantity: product?.quantity,
+      });
+    }
+  }
+  /*****************************
+   * Create the Checkout Session *
+   *****************************/
+  // this part create  checkout session with items in it
+  const session = await stripe.checkout.sessions.create({
+    line_items: stripeItems,
+    mode: "payment",
+    success_url: "http://localhost:3000/success",
+    cancel_url: "http://localhost:3000/cancel",
+  });
+
+  //  send back the session to client side
+  return NextResponse.json({ url: session.url });
 };
