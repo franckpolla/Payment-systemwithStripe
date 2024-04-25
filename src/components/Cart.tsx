@@ -20,20 +20,16 @@ const Cart = () => {
   async function checkout() {
     const dataObject = { products: cardContent };
     try {
+      // here  we are making post request to server with our data route.ts
       const response = await axios.post(
         "http://localhost:3000/api/checkout",
-        dataObject,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        dataObject
       );
       console.log(response.data);
       if (response.data.url) {
       }
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
     }
   }
   return (

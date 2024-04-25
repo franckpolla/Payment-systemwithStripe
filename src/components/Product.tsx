@@ -21,7 +21,7 @@ const Product = ({ product }: product) => {
   const { addToCart, cardContent } = useCart();
   const isProductIncart = cardContent.some((item) => item.id === product.id);
   return (
-    <Card className="w-80 mt-4 md:w-64 overflow-hidden">
+    <Card className=" mt-4 md:w-64 overflow-hidden">
       <CardHeader>
         <CardTitle>{product.name}</CardTitle>
         <CardDescription>${product.price}</CardDescription>

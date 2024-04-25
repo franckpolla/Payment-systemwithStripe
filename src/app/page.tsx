@@ -15,7 +15,7 @@ const Products: products[] = [
 ];
 const HomePage = () => {
   return (
-    <main className="flex bg-black text-white min-h-screen flex-col items-center justify-center p-10">
+    <main className="flex bg-black text-white min-h-screen flex-col items-center overflow-hidden justify-center p-10">
       <div className=" flex flex-col gap-3">
         <h1 className="text-2xl pt-10 pb-5"> Welcome to our store!</h1>
       </div>
