@@ -4,18 +4,18 @@ import Cart from "@/components/Cart";
 export type products = {
   id: number;
   name: string;
-  price: number | string;
+  price: number;
   quantity: number;
 };
 
 const Products: products[] = [
-  { id: 1, name: "Product 1", price: "$25", quantity: 3 },
-  { id: 2, name: "Product 2", price: "$25", quantity: 3 },
-  { id: 3, name: "Product 3", price: "$25", quantity: 3 },
+  { id: 1, name: "samsung A54", price: 475, quantity: 3 },
+  { id: 2, name: "Iphone 15", price: 1005.99, quantity: 3 },
+  { id: 3, name: "infinix 32", price: 253.99, quantity: 3 },
 ];
 const HomePage = () => {
   return (
-    <main className="flex bg-black text-white min-h-screen flex-col items-center justify-center p-24">
+    <main className="flex bg-black text-white min-h-screen flex-col items-center justify-center p-10">
       <div className=" flex flex-col gap-3">
         <h1 className="text-2xl pt-10 pb-5"> Welcome to our store!</h1>
       </div>

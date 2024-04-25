@@ -24,7 +24,7 @@ const Product = ({ product }: product) => {
     <Card className="w-80 mt-4 md:w-64 overflow-hidden">
       <CardHeader>
         <CardTitle>{product.name}</CardTitle>
-        <CardDescription>{product.price}</CardDescription>
+        <CardDescription>${product.price}</CardDescription>
       </CardHeader>
       <CardContent></CardContent>
       <CardFooter className="flex justify-between">
