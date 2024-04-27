@@ -1,10 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { Card, CardHeader, CardTitle } from "./ui/card";
 import { useCart } from "./CartContext";
 import axios from "axios";
 // useCart represent a  hook that returns the cart state and actions.
+
 const Cart = () => {
   const {
     cardContent,
@@ -12,6 +13,7 @@ const Cart = () => {
     decreamentQuantity,
     removeFromCart,
   } = useCart();
+  const [errorMessage, setErrorMessage] = useState("");
   const TotalAmount = cardContent.reduce(
     (total, product) => total + product.price * product.quantity,
     0
@@ -22,20 +24,22 @@ const Cart = () => {
     try {
       // here  we are making post request to server with our data route.ts
       const response = await axios.post(
-        "http://localhost:3000/api/checkout",
+        " http://localhost:3000/api/checkout",
         dataObject
       );
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data.url) {
         // this  will redirect user on successfull payment page.
         window.location.href = response.data.url;
       }
     } catch (error) {
-      console.error(error.message);
+      setErrorMessage(error.message);
     }
   }
   return (
     <div>
+      {errorMessage && <p>{errorMessage}</p>}
+
       <Card className="w-96 mt-10   md:w-[450px] md:h-auto pb-5  overflow-hidden">
         <CardHeader>
           <CardTitle>Your Cart</CardTitle>
@@ -96,3 +100,9 @@ const Cart = () => {
 };
 
 export default Cart;
+
+/**** 
+ ## Summary
+The `Cart` function represents a component in a TypeScript-React application that displays a shopping cart. It uses the `useCart` hook to access the cart state and actions. The function calculates the total amount of the items in the cart and provides a checkout functionality that sends a POST request to a server. The cart items are rendered in a `Card` component, and the user can increment or decrement the quantity of each item.
+
+ */
